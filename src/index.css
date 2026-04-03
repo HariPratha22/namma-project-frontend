@@ -1,0 +1,236 @@
+/* Data Masking Tool - Modern Cybersecurity Theme */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 260 100% 98%;     /* #F5F3FF - Soft Violet Background */
+    --foreground: 224 71.4% 4.1%;  /* text-gray-950 approx */
+
+    --card: 0 0% 100%;           /* bg-white */
+    --card-foreground: 224 71.4% 4.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+
+    --primary: 262 83% 58%;       /* #8B5CF6 - Violet 600 */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 262 100% 96%;     /* #F5F3FF - Violet 50 */
+    --secondary-foreground: 262 83% 40%;
+
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+
+    --accent: 262 100% 96%;
+    --accent-foreground: 262 83% 40%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 355.7 100% 97.3%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 355.7 100% 97.3%;
+
+    --danger: 0 84% 60%;
+    --danger-foreground: 355.7 100% 97.3%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 91%;        /* border-gray-200 / #E5E7EB approx */
+    --input: 214 32% 91%;
+    --ring: 262 83% 58%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 262 83% 40%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 262 83% 58%;
+
+    /* Gradient definitions */
+    --gradient-primary: linear-gradient(to right, #7C3AED, #4F46E5); /* Violet-600 to Indigo-600 */
+    --gradient-accent: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+    --gradient-dark: linear-gradient(to bottom right, #020617, #0F172A, #020617);
+    --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F9FAFB 100%);
+    --gradient-mesh: radial-gradient(at 40% 20%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
+                     radial-gradient(at 80% 0%, rgba(79, 70, 229, 0.1) 0px, transparent 50%);
+  }
+
+  .dark {
+    --background: 222 47% 5%;      /* #020617 */
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11% / 0.8;     /* #0F172A at 80% opacity */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 5%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 222 47% 11%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --border: 217 33% 25%;         /* #1E293B */
+    --input: 217 33% 17%;
+    --ring: 262 83% 58%;
+
+    --sidebar-background: 222 47% 3%; /* Deep navy #020617 */
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 15%;
+
+    --gradient-primary: linear-gradient(to right, #8B5CF6, #6366F1);
+    --gradient-accent: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+    --gradient-dark: linear-gradient(to bottom right, #020617, #0F172A, #020617);
+    --gradient-card: linear-gradient(145deg, #0F172A 0%, #020617 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    cursor: default;
+  }
+
+  body {
+    @apply text-foreground bg-background;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Global read-only text behavior - prevent editing of informational text */
+  h1, h2, h3, h4, h5, h6, p, span, div, label, td, th, li, 
+  [class*="text-"], [class*="font-"] {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  /* Fix cursor for interactive elements - allow editing only for actual inputs */
+  input:not([readonly]):not([disabled]), 
+  textarea:not([readonly]):not([disabled]), 
+  [contenteditable="true"] {
+    cursor: text;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+  }
+
+  button, a, [role="button"], select, [type="checkbox"], [type="radio"] {
+    cursor: pointer;
+  }
+
+  /* Ensure dropdown triggers and select elements are interactive but not text-editable */
+  [role="combobox"], [role="listbox"], [data-radix-select-trigger] {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply transition-all duration-300 rounded-xl border;
+    @apply bg-white shadow-md hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] border-[#E5E7EB];
+    @apply dark:bg-[#0F172A]/80 dark:backdrop-blur-md dark:border-[#1E293B] dark:shadow-lg dark:hover:shadow-purple-500/20;
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  .gradient-mesh {
+    background: var(--gradient-mesh);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background: var(--gradient-primary);
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+.animate-slideRight {
+  animation: slideRight 0.5s ease-out forwards;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+.delay-0 { animation-delay: 0ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
