@@ -5,7 +5,7 @@
  * Updated to use Django authentication instead of Supabase.
  */
 
-import { Search, Moon, Sun, LogOut } from "lucide-react";
+import { Search, Moon, Sun, LogOut, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState, KeyboardEvent } from "react";
@@ -23,7 +23,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
-export const Header = () => {
+interface HeaderProps {
+  onMenuClick?: () => void;
+}
+
+export const Header = ({ onMenuClick }: HeaderProps) => {
   const [isDark, setIsDark] = useState(false);
   const { searchQuery, setSearchQuery } = useSearch();
   const { user, isAuthenticated, logout } = useAuth();
@@ -56,16 +60,27 @@ export const Header = () => {
   const userName = user?.first_name || user?.username || 'User';
 
   return (
-    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-card/80 backdrop-blur-xl px-6">
-      {/* Search */}
-      <div className="relative w-full max-w-md">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
-        <Input
-          placeholder="Search tables, columns, or data..."
-          className="pl-10 bg-secondary/50 border-0 focus-visible:ring-1"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+    <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b bg-card/80 backdrop-blur-xl px-4 md:px-6">
+      <div className="flex items-center gap-4 flex-1">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="lg:hidden" 
+          onClick={onMenuClick}
+        >
+          <Menu className="h-6 w-6" />
+        </Button>
+
+        {/* Search */}
+        <div className="relative w-full max-w-md hidden sm:block">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <Input
+            placeholder="Search..."
+            className="pl-10 bg-secondary/50 border-0 focus-visible:ring-1 h-9"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       </div>
 
       {/* Actions */}

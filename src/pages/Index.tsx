@@ -134,44 +134,47 @@ const Index = () => {
   return (
     <Layout>
       <div className="space-y-6 opacity-0 animate-slideUp">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate('/projects')}
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground h-8 px-2 -ml-2"
               >
-                ← Back to Projects
+                ← Back
               </Button>
+              <Badge variant="outline" className="text-[10px] uppercase tracking-wider font-bold">
+                Active Project
+              </Badge>
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-1">{currentProject.name}</h1>
-            <p className="text-gray-600 dark:text-gray-300 mt-1 font-medium">
-              Project dashboard with PII detection and masking metrics
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-1">
+              {currentProject?.name}
+            </h1>
+            <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 font-medium">
+              PII detection and masking metrics for your data
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <Button
               onClick={handleStartScan}
               disabled={isScanning || isDashboardLoading}
-              className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:scale-[1.05] active:scale-95 hover:shadow-lg hover:shadow-violet-500/40 transition-all text-white font-semibold flex items-center gap-2"
+              className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:scale-[1.02] active:scale-95 hover:shadow-lg hover:shadow-violet-500/40 transition-all text-white font-semibold flex items-center justify-center gap-2 px-6 h-11"
             >
               {isScanning ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Scanning...
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>Scanning...</span>
                 </>
               ) : (
                 <>
-                  <Scan className="mr-2 h-4 w-4" />
-                  Start Scan
+                  <Scan className="h-4 w-4" />
+                  <span>Start Scan</span>
                 </>
               )}
             </Button>
-            <Badge variant="outline" className="text-sm">
-              Active Project
-            </Badge>
           </div>
         </div>
 

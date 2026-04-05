@@ -115,35 +115,37 @@ const DatabasePage = () => {
   return (
     <Layout>
       <div className="space-y-6 opacity-0 animate-fadeIn">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Database Connection</h1>
-          <p className="text-muted-foreground mt-1">
-            Connect to your database and scan tables for PII
-          </p>
-          <Badge variant="outline" className="mt-2">
-            Project: {currentProject.name}
-          </Badge>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Database Connection</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
+              Connect to your database and scan tables for PII
+            </p>
+            <Badge variant="outline" className="mt-2">
+              Project: {currentProject.name}
+            </Badge>
+          </div>
         </div>
 
         <DatabaseConnection onConnected={handleConnected} />
 
         {/* Success Message */}
         {showSuccessMessage && isConnected && (
-          <Card className="glass-effect border-green-500/50 bg-green-500/5">
-            <CardContent className="py-6">
-              <div className="flex items-center justify-between">
+          <Card className="glass-effect border-green-500/50 bg-green-500/5 overflow-hidden">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <CheckCircle2 className="h-8 w-8 text-green-500" />
+                  <CheckCircle2 className="h-6 w-6 sm:h-8 sm:w-8 text-green-500 flex-shrink-0" />
                   <div>
-                    <h3 className="font-semibold text-green-700 dark:text-green-400">
+                    <h3 className="font-semibold text-green-700 dark:text-green-400 text-sm sm:text-base">
                       Database connected successfully!
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       You may now proceed to scan PII data.
                     </p>
                   </div>
                 </div>
-                <Button onClick={handleProceedToDetection} className="gradient-primary">
+                <Button onClick={handleProceedToDetection} className="gradient-primary w-full sm:w-auto h-10 text-xs sm:text-sm">
                   Proceed to PII Detection
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -155,34 +157,34 @@ const DatabasePage = () => {
         {/* Available Tables - Only shown when connected */}
         {isConnected && (
           <Card className="glass-effect">
-            <CardHeader>
-              <div className="flex items-center justify-between">
+            <CardHeader className="p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <CardTitle className="flex items-center gap-2">
+                  <CardTitle className="flex items-center gap-2 text-lg">
                     <Database className="h-5 w-5 text-primary" />
                     Available Tables
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-xs sm:text-sm">
                     Tables detected in the connected database
                   </CardDescription>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" onClick={handleRefresh} disabled={isLoadingTables}>
-                    <RefreshCw className={`mr-2 h-4 w-4 ${isLoadingTables ? 'animate-spin' : ''}`} />
+                <div className="flex items-center gap-2 self-end sm:self-auto">
+                  <Button variant="outline" size="sm" onClick={handleRefresh} disabled={isLoadingTables} className="h-8 text-xs sm:text-sm px-2 sm:px-3">
+                    <RefreshCw className={`mr-1 sm:mr-2 h-3.5 w-3.5 ${isLoadingTables ? 'animate-spin' : ''}`} />
                     Refresh
                   </Button>
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="rounded-lg border overflow-hidden">
+            <CardContent className="p-0 sm:p-6 sm:pt-0">
+              <div className="rounded-lg border-x-0 sm:border overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-secondary/50">
-                      <TableHead>Table Name</TableHead>
+                      <TableHead className="w-[200px] min-w-[150px]">Table Name</TableHead>
                       <TableHead className="text-right">Rows</TableHead>
-                      <TableHead className="text-right">Columns</TableHead>
-                      <TableHead>Last Scanned</TableHead>
+                      <TableHead className="text-right">Cols</TableHead>
+                      <TableHead className="min-w-[120px]">Last Scanned</TableHead>
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -196,16 +198,16 @@ const DatabasePage = () => {
                     ) : (
                       (filteredTables || []).map((table) => (
                         <TableRow key={table.table_name} className="hover:bg-secondary/30">
-                          <TableCell className="font-mono font-medium">
+                          <TableCell className="font-mono font-medium text-xs sm:text-sm truncate max-w-[180px]">
                             {table.table_name}
                           </TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-right text-xs sm:text-sm">
                             {table.rows?.toLocaleString?.() || "0"}
                           </TableCell>
-                          <TableCell className="text-right">
+                          <TableCell className="text-right text-xs sm:text-sm">
                             {table.columns || "0"}
                           </TableCell>
-                          <TableCell className="text-muted-foreground">
+                          <TableCell className="text-muted-foreground text-xs sm:text-sm">
                             Never
                           </TableCell>
                           <TableCell className="text-right">
@@ -213,9 +215,10 @@ const DatabasePage = () => {
                               size="sm" 
                               variant="ghost" 
                               onClick={() => handleScanTable(table.table_name)}
+                              className="h-8 w-8 sm:w-auto p-0 sm:px-3 sm:py-1"
                             >
-                              <Scan className="mr-2 h-4 w-4" />
-                              Scan
+                              <Scan className="h-4 w-4 sm:mr-2" />
+                              <span className="hidden sm:inline">Scan</span>
                             </Button>
                           </TableCell>
                         </TableRow>

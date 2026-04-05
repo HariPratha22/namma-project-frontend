@@ -234,14 +234,16 @@ const DetectionPage = () => {
   return (
     <Layout>
       <div className="space-y-6 opacity-0 animate-scaleIn">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">PII Detection</h1>
-          <p className="text-muted-foreground mt-1">
-            Scan your database for personally identifiable information
-          </p>
-          <Badge variant="outline" className="mt-2">
-            Project: {currentProject.name}
-          </Badge>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">PII Detection</h1>
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
+              Scan your database for personally identifiable information
+            </p>
+            <Badge variant="outline" className="mt-2 text-[10px] sm:text-xs">
+              Project: {currentProject.name}
+            </Badge>
+          </div>
         </div>
 
         {/* Scan Error Alert */}
@@ -307,39 +309,37 @@ const DetectionPage = () => {
 
         {/* Detection Results - Shows only field names, never actual data */}
         {hasScanned && (
-          <Card className="glass-effect">
-            <CardHeader>
-              <div className="flex items-center justify-between">
+          <Card className="glass-effect overflow-hidden">
+            <CardHeader className="p-4 sm:p-6 border-b sm:border-0">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <CardTitle>Detected PII Fields</CardTitle>
-                  <CardDescription>
-                    Field names identified as potentially containing personal information
+                  <CardTitle className="text-lg sm:text-xl">Detected PII Fields</CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    Identified sensitive information fields 
                   </CardDescription>
                 </div>
-                <div className="flex items-center gap-3">
-                  {detectedFields.length > 0 && (
-                    <Badge variant="destructive" className="text-lg px-3 py-1">
-                      {detectedFields.length} fields found
-                    </Badge>
-                  )}
-                </div>
+                {detectedFields.length > 0 && (
+                  <Badge variant="destructive" className="self-start sm:self-auto text-sm sm:text-lg px-2 sm:px-3 py-1 font-bold">
+                    {detectedFields.length} found
+                  </Badge>
+                )}
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0 sm:p-6 sm:pt-0">
               {detectedFields.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <CheckCircle2 className="h-12 w-12 text-green-500 mb-4" />
-                  <p className="font-medium">No PII fields detected</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                <div className="flex flex-col items-center justify-center py-12 text-center p-6">
+                  <CheckCircle2 className="h-10 w-10 sm:h-12 sm:w-12 text-green-500 mb-4" />
+                  <p className="font-semibold text-sm sm:text-base">No PII fields detected</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                     Your database appears to be free of sensitive personal information
                   </p>
                 </div>
               ) : (
-                <>
-                  <div className="space-y-3 max-h-[400px] overflow-auto mb-6">
+                <div className="p-4 sm:p-0">
+                  <div className="space-y-3 max-h-[400px] overflow-y-auto mb-6 pr-1 custom-scrollbar">
                     {filteredFields.length === 0 ? (
-                      <div className="text-center py-8 text-muted-foreground">
-                        No fields match your search "{searchQuery}"
+                      <div className="text-center py-8 text-muted-foreground text-sm">
+                        No fields match "{searchQuery}"
                       </div>
                     ) : (
                       filteredFields.map((field) => {
@@ -349,25 +349,38 @@ const DetectionPage = () => {
                         return (
                           <div
                             key={field.id}
-                            className="flex items-center gap-3 rounded-lg border bg-card/50 p-4 transition-all hover:bg-secondary/50"
+                            className="flex flex-col sm:flex-row items-start sm:items-center gap-3 rounded-xl border bg-card/50 p-3 sm:p-4 transition-all hover:bg-secondary/50 border-transparent hover:border-violet-500/10 shadow-sm"
                           >
-                            <div className="rounded-lg bg-danger/10 p-2">
-                              <IconComponent className="h-4 w-4 text-danger" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2">
-                                <span className="font-mono font-medium">{field.field_name}</span>
-                                <Badge variant="outline">{field.field_type}</Badge>
+                            <div className="flex items-center gap-3 w-full sm:w-auto">
+                              <div className="rounded-lg bg-rose-500/10 p-2 flex-shrink-0">
+                                <IconComponent className="h-4 w-4 text-rose-500" />
                               </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className="font-mono font-bold text-sm text-gray-800 dark:text-gray-200 truncate pr-1">{field.field_name}</span>
+                                  <Badge variant="outline" className="text-[10px] h-5">{field.field_type}</Badge>
+                                </div>
+                              </div>
+                              <Badge 
+                                variant={field.confidence >= 90 ? "destructive" : "secondary"}
+                                className="text-[10px] sm:hidden ml-auto"
+                              >
+                                {field.confidence}%
+                              </Badge>
+                            </div>
+                            
+                            <div className="flex-1 sm:ml-2">
                               {field.table_name && (
-                                <span className="text-xs text-muted-foreground">
-                                  Table: {field.table_name}
+                                <span className="text-[10px] sm:text-xs text-muted-foreground flex items-center gap-1">
+                                  <Database className="h-3 w-3" />
+                                  {field.table_name}
                                 </span>
                               )}
                             </div>
+                            
                             <Badge 
                               variant={field.confidence >= 90 ? "destructive" : "secondary"}
-                              className="text-xs"
+                              className="text-[10px] sm:text-xs hidden sm:flex"
                             >
                               {field.confidence}% confidence
                             </Badge>
@@ -377,11 +390,11 @@ const DetectionPage = () => {
                     )}
                   </div>
 
-                  <Button onClick={handleMaskData} className="w-full gradient-primary" size="lg">
+                  <Button onClick={handleMaskData} className="w-full gradient-primary h-12 shadow-lg shadow-violet-500/30 hover:shadow-violet-500/40" size="lg">
                     <Shield className="mr-2 h-5 w-5" />
                     Mask Your Data
                   </Button>
-                </>
+                </div>
               )}
             </CardContent>
           </Card>

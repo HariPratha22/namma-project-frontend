@@ -64,24 +64,24 @@ const ProjectsPage = () => {
         {/* Page Header */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600/10 via-indigo-600/10 to-purple-600/10 border border-violet-500/20 p-8">
           <div className="absolute inset-0 bg-gradient-to-r from-violet-600/5 to-transparent" />
-          <div className="relative flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2.5 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-500/30">
+          <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-500/30 flex-shrink-0">
                   <Sparkles className="h-6 w-6 text-white" />
                 </div>
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
                   Your Projects
                 </h1>
               </div>
-              <p className="text-gray-600 dark:text-gray-400 mt-2 max-w-lg">
+              <p className="text-gray-600 dark:text-gray-400 max-w-lg text-sm sm:text-base leading-relaxed">
                 Select an existing project to continue working, or create a new one to start protecting your data.
               </p>
             </div>
             {isAuthenticated && (
               <Button
                 onClick={() => setShowNewProjectDialog(true)}
-                className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:scale-105 hover:shadow-lg hover:shadow-violet-500/40 transition-all text-white font-semibold px-6 py-2.5"
+                className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:scale-105 hover:shadow-lg hover:shadow-violet-500/40 transition-all text-white font-semibold px-6 py-2.5 w-full sm:w-auto"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 New Project

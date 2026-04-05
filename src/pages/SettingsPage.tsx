@@ -82,10 +82,10 @@ const SettingsPage = () => {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-4xl">
+      <div className="space-y-6 max-w-4xl opacity-0 animate-fadeIn">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Settings</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">
             Configure your data masking preferences
           </p>
         </div>
@@ -262,11 +262,11 @@ const SettingsPage = () => {
           </Card>
         )}
 
-        <div className="flex justify-end gap-3">
-          <Button variant="outline" onClick={handleReset}>
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-6">
+          <Button variant="outline" onClick={handleReset} className="w-full sm:w-auto">
             Reset to Defaults
           </Button>
-          <Button onClick={handleSave} className="gradient-primary">
+          <Button onClick={handleSave} className="gradient-primary w-full sm:w-auto shadow-lg shadow-violet-500/25">
             Save Settings
           </Button>
         </div>

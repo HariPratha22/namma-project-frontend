@@ -12,8 +12,8 @@ const UploadPage = () => {
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">File Upload</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">File Upload</h1>
+          <p className="text-sm sm:text-base text-muted-foreground mt-1">
             Upload files to scan for PII and apply masking
           </p>
         </div>

@@ -100,8 +100,8 @@ const AuthPage = () => {
 
   return (
     <Layout>
-      <div className="flex items-center justify-center min-h-[calc(100vh-8rem)]">
-        <Card className="glass-effect w-full max-w-md">
+      <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] p-4 sm:p-8">
+        <Card className="glass-effect w-full max-w-md shadow-2xl">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold">
               {isLogin ? "Welcome Back" : "Create Account"}
