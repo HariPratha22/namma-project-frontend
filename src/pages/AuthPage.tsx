@@ -3,10 +3,12 @@
  * 
  * Handles user login and registration using Django JWT authentication.
  * Replaces Supabase authentication.
+ * 
+ * This page renders WITHOUT the Layout/Sidebar to avoid overlap issues.
+ * It uses its own fullscreen centered layout.
  */
 
 import { useState, useEffect } from "react";
-import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -99,10 +101,28 @@ const AuthPage = () => {
   };
 
   return (
-    <Layout>
-      <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] p-4 sm:p-8">
-        <Card className="glass-effect w-full max-w-md shadow-2xl">
-          <CardHeader className="text-center">
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#F5F3FF] via-[#EDE9FE] to-[#DDD6FE] dark:from-[#020617] dark:via-[#0F172A] dark:to-[#020617]">
+      {/* Background radial glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(139,92,246,0.2),transparent_70%)] pointer-events-none" />
+
+      {/* Branding + Card container */}
+      <div className="relative z-10 w-full max-w-md mx-auto px-4 py-8 sm:px-6">
+        {/* Logo / Branding */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 shadow-lg shadow-violet-500/30 mb-4">
+            <Lock className="h-7 w-7 text-white" />
+          </div>
+          <span className="font-bold text-2xl tracking-wide bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent dark:text-white">
+            DataMask
+          </span>
+          <p className="text-xs uppercase tracking-widest font-semibold text-gray-500 dark:text-white/60 mt-1">
+            PII Protection Tool
+          </p>
+        </div>
+
+        {/* Auth Card */}
+        <Card className="glass-effect w-full shadow-2xl border-violet-500/10">
+          <CardHeader className="text-center pb-4">
             <CardTitle className="text-2xl font-bold">
               {isLogin ? "Welcome Back" : "Create Account"}
             </CardTitle>
@@ -246,8 +266,9 @@ const AuthPage = () => {
           </CardContent>
         </Card>
       </div>
-    </Layout>
+    </div>
   );
 };
 
 export default AuthPage;
+
