@@ -87,10 +87,14 @@ export const Sidebar = ({
 
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 flex h-screen flex-col border-r transition-all duration-300 overflow-hidden bg-sidebar-background border-sidebar-border shadow-xl",
-          // Mobile vs Desktop logic
-          isMobileOpen ? "translate-x-0 w-64" : "-translate-x-full lg:translate-x-0",
-          !isMobileOpen && (collapsed ? "lg:w-[72px]" : "lg:w-64")
+          "top-0 left-0 flex h-screen flex-col border-r transition-all duration-300 overflow-hidden bg-sidebar-background border-sidebar-border shadow-xl shrink-0",
+          // Mobile: fixed floating drawer | Desktop: sticky in flex flow
+          "fixed lg:sticky",
+          "z-50 lg:z-30",
+          // Desktop width (controlled by collapse state)
+          collapsed ? "lg:w-[72px]" : "lg:w-64",
+          // Mobile: slide in/out via translate
+          isMobileOpen ? "w-64 translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
         {/* Logo */}
