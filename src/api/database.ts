@@ -181,7 +181,7 @@ export async function createDbConnection(
   projectId: string,
   payload: CreateDbConnectionRequest
 ): Promise<DatabaseConnectionData> {
-  return authFetch<DatabaseConnectionData>(`/api/projects/${projectId}/db-connections/`, {
+  return authFetch<DatabaseConnectionData>(`/projects/${projectId}/db-connections/`, {
     method: 'POST',
     body: JSON.stringify(payload),
   });
@@ -201,7 +201,7 @@ export async function testDbConnection(
   connectionId: number
 ): Promise<TestConnectionResponse> {
   return authFetch<TestConnectionResponse>(
-    `/api/projects/${projectId}/db-connections/${connectionId}/test/`,
+    `/projects/${projectId}/db-connections/${connectionId}/test/`,
     { method: 'POST' }
   );
 }
@@ -222,7 +222,7 @@ export async function fetchDbTables(
   connectionId: number
 ): Promise<FetchTablesResponse> {
   return authFetch<FetchTablesResponse>(
-    `/api/projects/${projectId}/db-connections/${connectionId}/tables/`,
+    `/projects/${projectId}/db-connections/${connectionId}/tables/`,
     { method: 'GET' }
   );
 }

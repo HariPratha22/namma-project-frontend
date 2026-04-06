@@ -202,7 +202,7 @@ export async function refreshAccessToken(): Promise<boolean> {
   }
   
   try {
-    const response = await fetch(getApiUrl('/api/auth/token/refresh/'), {
+    const response = await fetch(getApiUrl('/auth/token/refresh/'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ export async function refreshAccessToken(): Promise<boolean> {
  * Register a new user
  */
 export async function register(data: RegisterRequest): Promise<RegisterResponse> {
-  const response = await fetch(getApiUrl('/api/auth/register/'), {
+  const response = await fetch(getApiUrl('/auth/register/'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -253,7 +253,7 @@ export async function register(data: RegisterRequest): Promise<RegisterResponse>
  * Login user and get JWT tokens
  */
 export async function login(data: LoginRequest): Promise<LoginResponse> {
-  const response = await fetch(getApiUrl('/api/auth/login/'), {
+  const response = await fetch(getApiUrl('/auth/login/'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -281,7 +281,7 @@ export async function logout(): Promise<void> {
   
   if (refreshToken) {
     try {
-      await authFetch('/api/auth/logout/', {
+      await authFetch('/auth/logout/', {
         method: 'POST',
         body: JSON.stringify({ refresh: refreshToken }),
       });
@@ -302,7 +302,7 @@ export async function getCurrentUser(): Promise<User | null> {
   }
   
   try {
-    const response = await authFetch<MeResponse>('/api/auth/me/', {
+    const response = await authFetch<MeResponse>('/auth/me/', {
       method: 'GET',
     });
     return response.user;

@@ -195,7 +195,7 @@ async function authFetch<T>(
  * @returns List of projects owned by the user
  */
 export async function fetchProjects(): Promise<ProjectListResponse> {
-  return authFetch<ProjectListResponse>('/api/projects/');
+  return authFetch<ProjectListResponse>('/projects/');
 }
 
 /**
@@ -205,7 +205,7 @@ export async function fetchProjects(): Promise<ProjectListResponse> {
  * @returns The created project
  */
 export async function createProject(data: CreateProjectRequest): Promise<ProjectResponse> {
-  return authFetch<ProjectResponse>('/api/projects/', {
+  return authFetch<ProjectResponse>('/projects/', {
     method: 'POST',
     body: JSON.stringify(data),
   });
@@ -218,7 +218,7 @@ export async function createProject(data: CreateProjectRequest): Promise<Project
  * @returns Project details
  */
 export async function getProject(projectId: string): Promise<{ project: Project }> {
-  return authFetch<{ project: Project }>(`/api/projects/${projectId}/`);
+  return authFetch<{ project: Project }>(`/projects/${projectId}/`);
 }
 
 /**
@@ -228,7 +228,7 @@ export async function getProject(projectId: string): Promise<{ project: Project 
  * @returns Updated project with is_active = true
  */
 export async function selectProject(projectId: string): Promise<ProjectResponse> {
-  const response = await authFetch<ProjectResponse>(`/api/projects/${projectId}/select/`, {
+  const response = await authFetch<ProjectResponse>(`/projects/${projectId}/select/`, {
     method: 'POST',
   });
   
@@ -247,7 +247,7 @@ export async function selectProject(projectId: string): Promise<ProjectResponse>
 export async function deleteProject(projectId: string): Promise<DeleteProjectResponse> {
   const storedActiveId = getStoredActiveProjectId();
   
-  const response = await authFetch<DeleteProjectResponse>(`/api/projects/${projectId}/delete/`, {
+  const response = await authFetch<DeleteProjectResponse>(`/projects/${projectId}/delete/`, {
     method: 'DELETE',
   });
   
@@ -265,7 +265,7 @@ export async function deleteProject(projectId: string): Promise<DeleteProjectRes
  * @returns The active project or null if none selected
  */
 export async function getActiveProject(): Promise<ActiveProjectResponse> {
-  return authFetch<ActiveProjectResponse>('/api/projects/active/');
+  return authFetch<ActiveProjectResponse>('/projects/active/');
 }
 
 /**
@@ -276,7 +276,7 @@ export async function getActiveProject(): Promise<ActiveProjectResponse> {
 export async function clearActiveProject(): Promise<{ message: string }> {
   clearStoredActiveProjectId();
   
-  return authFetch<{ message: string }>('/api/projects/active/', {
+  return authFetch<{ message: string }>('/projects/active/', {
     method: 'DELETE',
   });
 }

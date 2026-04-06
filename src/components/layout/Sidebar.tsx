@@ -107,7 +107,7 @@ export const Sidebar = ({
               <span className="font-bold text-lg tracking-wide bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent dark:text-white drop-shadow-sm">
                 DataMask
               </span>
-              <p className="text-[10px] uppercase tracking-wider font-semibold text-gray-500 dark:text-white/60 truncate">PII Protection Tool</p>
+              <p className="text-[10px] uppercase tracking-wider font-semibold text-gray-900 dark:text-white/60 truncate">PII Protection Tool</p>
             </div>
           )}
         </div>
@@ -126,12 +126,12 @@ export const Sidebar = ({
                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all group",
                     isActive
                       ? "bg-violet-600 text-white dark:bg-violet-600 dark:text-white shadow-lg shadow-violet-500/30"
-                      : "text-gray-500 dark:text-gray-400 hover:bg-violet-500/10 dark:hover:bg-violet-500/20 hover:text-violet-600 dark:hover:text-white"
+                      : "text-gray-900 dark:text-white hover:bg-violet-500/10 dark:hover:bg-violet-500/20 hover:text-violet-600 dark:hover:text-white"
                   )}
                 >
                   <item.icon className={cn(
                     "h-5 w-5 flex-shrink-0 transition-colors",
-                    isActive ? "text-white" : "text-gray-500 dark:text-gray-400 group-hover:text-violet-600 dark:group-hover:text-white"
+                    isActive ? "text-white" : "text-gray-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-white"
                   )} />
                   {(!collapsed || isMobileOpen) && <span className="truncate">{item.label}</span>}
                 </Link>
@@ -165,12 +165,12 @@ export const Sidebar = ({
                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all group",
                     isActive
                       ? "bg-violet-600 text-white dark:bg-violet-600 dark:text-white shadow-lg shadow-violet-500/30"
-                      : "text-gray-500 dark:text-gray-400 hover:bg-violet-500/10 dark:hover:bg-violet-500/20 hover:text-violet-600 dark:hover:text-white"
+                      : "text-gray-900 dark:text-white hover:bg-violet-500/10 dark:hover:bg-violet-500/20 hover:text-violet-600 dark:hover:text-white"
                   )}
                 >
                   <item.icon className={cn(
                     "h-5 w-5 flex-shrink-0 transition-colors",
-                    isActive ? "text-white" : "text-gray-500 dark:text-gray-400 group-hover:text-violet-600 dark:group-hover:text-white"
+                    isActive ? "text-white" : "text-gray-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-white"
                   )} />
                   {(!collapsed || isMobileOpen) && <span className="truncate">{item.label}</span>}
                 </Link>

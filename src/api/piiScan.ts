@@ -162,7 +162,7 @@ async function authFetch<T>(
  */
 export async function startPiiScan(projectId: string): Promise<StartScanResponse> {
   return authFetch<StartScanResponse>(
-    `/api/projects/${projectId}/scan/start/`,
+    `/projects/${projectId}/scan/start/`,
     { method: 'POST' }
   );
 }
@@ -175,7 +175,7 @@ export async function startPiiScan(projectId: string): Promise<StartScanResponse
  */
 export async function fetchScanResults(projectId: string): Promise<ScanResultsResponse> {
   return authFetch<ScanResultsResponse>(
-    `/api/projects/${projectId}/scan/results/`
+    `/projects/${projectId}/scan/results/`
   );
 }
 

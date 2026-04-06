@@ -228,7 +228,7 @@ export async function fetchDashboardStats(projectId: string): Promise<DashboardS
   try {
     // Fetch both stats and scan results in parallel
     const [statsResponse, scanResponse] = await Promise.all([
-      authFetch<StatsApiResponse>(`/api/projects/${projectId}/stats/`).catch(() => null),
+      authFetch<StatsApiResponse>(`/projects/${projectId}/stats/`).catch(() => null),
       fetchScanResults(projectId).catch(() => null),
     ]);
 
@@ -283,7 +283,7 @@ export async function fetchPIIDistribution(projectId: string): Promise<PIIDistri
 export async function fetchMaskingMethods(projectId: string): Promise<MaskingMethodItem[]> {
   try {
     const response = await authFetch<any[]>(
-      `/api/projects/${projectId}/masking-methods/`
+      `/projects/${projectId}/masking-methods/`
     );
     // 🔥 ADD THIS LINE
     console.log("🔥 masking methods response:", response);
@@ -312,7 +312,7 @@ export async function fetchRecentActivity(
 ): Promise<ActivityItem[]> {
   try {
     const response = await authFetch<any>(
-      `/api/projects/${projectId}/activity/?limit=${limit}`
+      `/projects/${projectId}/activity/?limit=${limit}`
     );
     return Array.isArray(response) ? response : (response?.activities || []);
   } catch (error) {

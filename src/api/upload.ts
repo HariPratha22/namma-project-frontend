@@ -140,7 +140,7 @@ export async function uploadFile(
   formData.append('file', file);
 
   const response = await authFetchRaw(
-    `/api/projects/${projectId}/upload/`,
+    `/projects/${projectId}/upload/`,
     { method: 'POST', body: formData }
   );
 
@@ -158,7 +158,7 @@ export async function detectPIIFromFile(
   tableName: string = 'uploaded_file'
 ): Promise<FileDetectPIIResponse> {
   return authFetchJSON<FileDetectPIIResponse>(
-    `/api/projects/${projectId}/file/detect-pii/`,
+    `/projects/${projectId}/file/detect-pii/`,
     {
       method: 'POST',
       body: JSON.stringify({

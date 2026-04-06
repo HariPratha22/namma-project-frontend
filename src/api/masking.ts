@@ -43,7 +43,7 @@ export async function applyProtection(
   source?: "file" | "database",
   tableData?: any
 ): Promise<{ message: string; tables: any[]; logs: string[]; masked_data?: any[] }> {
-  const url = `/api/projects/${projectId}/masking/apply/`;
+  const url = `/projects/${projectId}/masking/apply/`;
 
   const accessToken = getAccessToken();
   const fullUrl = getApiUrl(url);
@@ -203,8 +203,8 @@ export async function exportMaskedData(
     }
   }
 
-  // ✅ Correct endpoint (WITH /api)
-  const endpoint = `/api/projects/${projectId}/masking/export/${format}/`;
+  // ✅ Correct endpoint
+  const endpoint = `/projects/${projectId}/masking/export/${format}/`;
 
   // ✅ Use your existing auth system
   const response = await authFetchRaw(endpoint, {
@@ -237,7 +237,7 @@ export async function exportMaskedData(
   window.URL.revokeObjectURL(url);
 }
 export async function pushToSourceDatabase(projectId: string) {
-  const endpoint = `/api/projects/${projectId}/database/push/`;
+  const endpoint = `/projects/${projectId}/database/push/`;
 
   // authFetchRaw automatically adds your security token!
   const response = await authFetchRaw(endpoint, {

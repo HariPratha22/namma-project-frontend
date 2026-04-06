@@ -49,15 +49,17 @@ export interface ApiError {
  * @param endpoint - The API endpoint path (e.g., '/api/health')
  * @returns Full URL string
  */
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 export function getApiUrl(endpoint: string): string {
-  // If the endpoint is already a full URL, return it as is
-  if (endpoint.startsWith('http://') || endpoint.startsWith('https://')) {
-    return endpoint;
-  }
-  
-  // Ensure endpoint starts with /
-  const normalizedEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-  return `${API_BASE_URL}${normalizedEndpoint}`;
+  const base = API_BASE_URL.endsWith('/')
+    ? API_BASE_URL.slice(0, -1)
+    : API_BASE_URL;
+
+  const path = endpoint.startsWith('/')
+    ? endpoint
+    : `/${endpoint}`;
+
+  return base + path;
 }
 
 /**
@@ -124,8 +126,8 @@ export async function apiPost<T>(endpoint: string, data?: unknown, options?: Req
  */
 export async function checkBackendHealth(): Promise<BackendStatus> {
   try {
-    const response = await apiGet<HealthCheckResponse>('/api/health');
-    
+    const response = await apiGet<HealthCheckResponse>('/health');
+
     return {
       connected: response.status === 'ok',
       message: `Connected to ${response.service}`,
@@ -134,7 +136,7 @@ export async function checkBackendHealth(): Promise<BackendStatus> {
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    
+
     return {
       connected: false,
       message: `Backend unavailable: ${errorMessage}`,
