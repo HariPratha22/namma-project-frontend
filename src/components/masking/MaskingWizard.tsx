@@ -400,7 +400,7 @@ export const MaskingWizard = () => {
       setCurrentProcessingIndex(0);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to apply real protection: " + (err instanceof Error ? err.message : "Unknown error"));
+      toast.error(parseMaskingError(err));
       setIsProcessing(false);
       processingRef.current = false;
     }

@@ -10,6 +10,8 @@
 
 import { getApiUrl } from './client';
 import { getAccessToken, refreshAccessToken, clearTokens } from './auth';
+import React from 'react';
+import { ShieldAlert, Lightbulb } from 'lucide-react';
 
 // =============================================================================
 // TECHNIQUE MAPPING
@@ -255,9 +257,9 @@ export async function pushToSourceDatabase(projectId: string) {
 // =============================================================================
 
 /**
- * Parse masking API errors into a user-friendly message
+ * Parse masking API errors into a user-friendly message or component.
  */
-export function parseMaskingError(error: unknown): string {
+export function parseMaskingError(error: unknown): string | React.ReactNode {
   if (error instanceof Error) {
     if (error.message.includes('backend not reachable')) {
       return 'Export failed - backend not reachable';
@@ -265,10 +267,35 @@ export function parseMaskingError(error: unknown): string {
     if (error.message.includes('Session expired')) {
       return 'Session expired. Please login again.';
     }
+
     try {
+      // 1. Try to parse backend structured error
       const parsed = JSON.parse(error.message);
+      
+      // If we have our new structured format, render it beautifully
+      if (parsed.status === 'error' && parsed.title && parsed.message) {
+        return React.createElement('div', { className: 'flex flex-col gap-2 py-1' }, [
+          React.createElement('div', { key: 'title', className: 'flex items-center gap-2 font-bold text-red-600 dark:text-red-400' }, [
+            React.createElement(ShieldAlert, { key: 'icon', className: 'h-4 w-4' }),
+            parsed.title
+          ]),
+          React.createElement('div', { key: 'msg', className: 'text-sm text-gray-700 dark:text-gray-300' }, 
+            parsed.message
+          ),
+          parsed.suggestion && React.createElement('div', { 
+            key: 'sugg', 
+            className: 'text-xs bg-purple-500/10 dark:bg-purple-900/20 border border-purple-500/20 text-purple-700 dark:text-purple-300 p-2 rounded-md mt-1 flex gap-2 items-center' 
+          }, [
+            React.createElement(Lightbulb, { key: 's-icon', className: 'h-3 w-3 shrink-0' }),
+            parsed.suggestion
+          ])
+        ]);
+      }
+
+      // Fallback for standard Django or generic error fields
       return parsed.detail || parsed.message || error.message;
     } catch {
+      // Not JSON? Just return the raw string
       return error.message;
     }
   }
